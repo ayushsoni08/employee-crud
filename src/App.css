@@ -1,38 +1,98 @@
-.App {
+.heading {
+  font-size: 2em;
   text-align: center;
+  margin: 20px 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  width: 50%;
+  margin: 0 auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.employeeTable {
+  width: 100%;
+  margin-left: 90px;
+  border-collapse: collapse;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.employeeTable th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.add-btn {
+  padding: 8px 15px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: rgb(78, 125, 255);
   color: white;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+.add-btn:hover {
+  background: transparent;
+  color: rgb(101, 142, 255);
+  outline: auto;
+  transition: all 0.5s ease-in-out;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.delete-btn {
+  padding: 8px 15px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: rgb(255, 55, 37);
+  color: white;
+  font-weight: bold;
+}
+
+.delete-btn:hover {
+  background: transparent;
+  color: rgb(255, 55, 37);
+  outline: auto;
+  transition: all 0.5s ease-in-out;
+}
+
+@media (max-width: 400px) {
+  .employeeTable th, td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
   }
-  to {
-    transform: rotate(360deg);
+
+  .employeeTable thead {
+    display: none;
+  }
+
+  .employeeTable tr {
+    margin-bottom: 10px;
+    display: block;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .employeeTable td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .employeeTable td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    padding-right: 10px;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .employeeTable td:last-child {
+    text-align: center;
   }
 }
