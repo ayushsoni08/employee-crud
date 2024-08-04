@@ -1,10 +1,22 @@
-# Getting Started with Create React App
+# Getting Started 
+1. Make sure Git and NodeJS are installed.
+2. Clone this repository to your local computer.
+3. Create a .env file in the root directory.
+4. Contents of .env
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# .env
+# cosmocloud base API URL
+COSMOCLOUD_BASE_URL=pk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# cosmocloud project and environment IDs
+PROJECT_ID = pk_test_XXXXXXXXXXXXX
+ENVIRONMENT_ID = pk_test_XXXXXXXXXXXXX
+
 
 ## Available Scripts
 
-In the project directory, you can run:
+Open the terminal in the root directory. Run npm install.
+Now, the app is fully configured. You can run the app using the npm start command.
 
 ### `npm start`
 
