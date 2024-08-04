@@ -1,48 +1,132 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './AddEmployee.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AddEmployee = () => {
-  return (
-    <div className='container'>
-        <h3 className='heading'>Add a new Employee</h3>
-        <form action="">
-            <input type="hidden" name="emp_id" id='emp_id' value='' />
+
+    const navigate = useNavigate();
+
+    const [employee, setEmployee] = useState({
+        name: '',
+        email: '',
+        address_line1: '',
+        country: '',
+        zip_code: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setEmployee({ ...employee, [name]: value });
+    };
+
+    const validateEmployeeData = () => {
+        const { name, email, address_line1, country, zip_code } = employee;
+        if (!name || !email || !address_line1 || !country || !zip_code) 
+            return false;
+
+        return true;
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!validateEmployeeData()) {
+            console.log("Invalid employee data: ", employee);
+            return;
+        }
+
+        try {
+            const res = await axios.post(
+                'https://free-ap-south-1.cosmocloud.io/development/api/employee',
+                employee,
+                {
+                    headers: {
+                        'projectId': '66ade3045981a392dc2bb38b',
+                        'environmentId': '66ade3045981a392dc2bb38c',
+                    }
+                }
+            );
+            navigate('/');
             
-            <div className='form-group'>
-                <label htmlFor="name">Name</label>
-                <input type="text" id='name' name='name' placeholder='full name' required />
-            </div>
-
-            <div className='form-group'>
-                <label htmlFor="address_line1">Address Line 1</label>
-                <input type="text" id='address_line1' name='address_line1' placeholder='address' required />
-            </div>
-            <div className='form-group'>
-                <label htmlFor="country">Country</label>
-                <input type="text" id='country' name='country' placeholder='country' required />
-            </div>
-            <div className='form-group'>
-                <label htmlFor="zip_code">Zip Code</label>
-                <input type="text" id='zip_code' name='zip_code' placeholder='zip code' required />
-            </div>
-
-            <div className='contact-methods-container'>
-                <div className='form-group contact-method-group'>
-                    <label htmlFor="contact_method">Contact</label>
-                    <select name="contact_method[]">
-                        <option value="EMAIL">EMAIL</option>
-                        <option value="PHONE">PHONE</option>
-                    </select>
-                    <input type="text" name='contact_value[]' placeholder='Enter value' required />
+        } catch (error) {
+            console.error('Error Creating Employee:', error.response ? error.response.data : error.message);
+        }
+    }
+    
+    return (
+        <div className='container'>
+            <h3 className='heading'>Add a new Employee</h3>
+            <form onSubmit={handleSubmit}>
+                <div className='form-group'>
+                    <label htmlFor="name">Name</label>
+                    <input 
+                        type="text" 
+                        id='name' 
+                        name='name' 
+                        placeholder='full name' 
+                        value={employee.name}
+                        onChange={handleChange}
+                        required 
+                    />
                 </div>
-            </div>
 
-            <div className='form-group'>
-                <button className='submit-btn'>Submit</button>
-            </div>
-        </form>
-    </div>
-  )
+                <div className='form-group'>
+                    <label htmlFor="email">Email</label>
+                    <input 
+                        type="email" 
+                        id='email' 
+                        name='email' 
+                        placeholder='email' 
+                        value={employee.email}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+
+                <div className='form-group'>
+                    <label htmlFor="address_line1">Address Line 1</label>
+                    <input 
+                        type="text" 
+                        id='address_line1' 
+                        name='address_line1' 
+                        placeholder='address' 
+                        value={employee.address_line1}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+                <div className='form-group'>
+                    <label htmlFor="country">Country</label>
+                    <input 
+                        type="text" 
+                        id='country' 
+                        name='country' 
+                        placeholder='country' 
+                        value={employee.country}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+                <div className='form-group'>
+                    <label htmlFor="zip_code">Zip Code</label>
+                    <input 
+                        type="text" 
+                        id='zip_code' 
+                        name='zip_code' 
+                        placeholder='zip code' 
+                        value={employee.zip_code}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+
+                <div className='form-group'>
+                    <button type='submit' className='submit-btn'>Submit</button>
+                </div>
+            </form>
+        </div>
+    );
 }
 
-export default AddEmployee
+export default AddEmployee;

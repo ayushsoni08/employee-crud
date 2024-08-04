@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<EmployeesList />} />
         <Route exact path='/add-employee' element={<AddEmployee />} />
-        <Route exact path='/employee-detail' element={<EmployeeDetail />} />
+        <Route exact path='/employee/:id' element={<EmployeeDetail />} />
       </Routes>
     </BrowserRouter>
   );
