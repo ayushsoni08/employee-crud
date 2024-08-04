@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../App.css';
+import './EmployeeList.css';
 import { Link } from 'react-router-dom';
 
 const EmployeesList = () => {
@@ -14,15 +14,17 @@ const EmployeesList = () => {
               <th>Name</th>
               <th>ID</th>
               <th>
-                  <Link to='/add-employee'>
-                    <button className='add-btn'>Add +</button>
-                  </Link>
+                  <button className='add-btn'>
+                    <Link className='link' to='/add-employee'>
+                      Add +
+                    </Link>
+                  </button>
               </th> 
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td data-label="Name">Ayush</td>
+              <td data-label="Name"><Link to='/employee-detail' className='link'>Ayush</Link></td>
               <td dta-label="ID">08</td>
               <td data-label="action"><button className='delete-btn'>Delete</button></td>
             </tr>
