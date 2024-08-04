@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import './EmployeeDetail.css'
 
+const apiUrl = process.env.REACT_APP_COSMOCLOUD_BASE_URL;
+const projectId = process.env.REACT_APP_PROJECT_ID;
+const environmentId = process.env.REACT_APP_ENVIRONMENT_ID;
+
 const EmployeeDetail = () => {
 
   const { id } = useParams();
@@ -14,10 +18,10 @@ const EmployeeDetail = () => {
 
   const fetchEmployee = async () => {
     try {
-      const response = await axios.get(`https://free-ap-south-1.cosmocloud.io/development/api/employee/${id}`, {
+      const response = await axios.get(`${apiUrl}/${id}`, {
         headers: {
-          'projectId': '66ade3045981a392dc2bb38b',
-          'environmentId': '66ade3045981a392dc2bb38c',
+          'projectId': projectId,
+          'environmentId': environmentId,
         }
       });
       setEmployee(response.data);

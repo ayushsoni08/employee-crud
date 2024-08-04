@@ -3,8 +3,14 @@ import "./EmployeeList.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+const apiUrl = process.env.REACT_APP_COSMOCLOUD_BASE_URL;
+const projectId = process.env.REACT_APP_PROJECT_ID;
+const environmentId = process.env.REACT_APP_ENVIRONMENT_ID;
+
 const EmployeesList = () => {
   const [employees, setEmployees] = useState([]);
+  const [limit, setLimit] = useState(10);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     fetchEmployees();
@@ -37,13 +43,14 @@ const EmployeesList = () => {
   };
 
   const deleteEmployee = async (id) => {
-    const url = `https://free-ap-south-1.cosmocloud.io/development/api/employee/${id}`;
+    const url = `${apiUrl}/${id}`;
+    
     try {
       const response = await axios.delete(url, {
         headers: {
-          'projectId': '66ade3045981a392dc2bb38b',
-          'environmentId': '66ade3045981a392dc2bb38c',
-        }, 
+          'projectId': projectId,
+          'environmentId': environmentId,
+        },
         data: {},
       });
       console.log('Delete response:', response.data);
@@ -59,45 +66,51 @@ const EmployeesList = () => {
     <>
       <h1 className="heading">Employees</h1>
       <div className="container">
-        {!employees && <p>No Employees in the system.</p>}
+        {employees.length === 0 ?
+          (
+            <p>No Employees in the system.</p>
+          ) : (
 
-        {employees && (
-          <table className="employeeTable">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>ID</th>
-                <th>
-                  <button className="add-btn">
-                    <Link className="link" to="/add-employee">
-                      Add +
-                    </Link>
-                  </button>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {employees?.map((employee) => (
-                <tr key={employee._id}>
-                  <td>
-                    <Link className="link" to={`/employee/${employee._id}`}>
-                      {employee.name}
-                    </Link>
-                  </td>
-                  <td>{employee._id}</td>
-                  <td data-label="action">
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteEmployee(employee._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+            employees && (
+              <table className="employeeTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>
+                      <button className="add-btn">
+                        <Link className="link" to="/add-employee">
+                          Add +
+                        </Link>
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {employees?.map((employee) => (
+                    <tr key={employee._id}>
+                      <td>
+                        <Link className="link" to={`/employee/${employee._id}`}>
+                          {employee.name}
+                        </Link>
+                      </td>
+                      <td>{employee._id}</td>
+                      <td data-label="action">
+                        <button
+                          className="delete-btn"
+                          onClick={() => deleteEmployee(employee._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ))}
+            {employees.length > 10 && 
+              <button className="load-btn" onClick={() => setOffset(offset + limit)}>Load more</button>
+            }
       </div>
     </>
   );

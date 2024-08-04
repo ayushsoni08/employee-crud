@@ -3,6 +3,10 @@ import './AddEmployee.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_COSMOCLOUD_BASE_URL;
+const projectId = process.env.REACT_APP_PROJECT_ID;
+const environmentId = process.env.REACT_APP_ENVIRONMENT_ID;
+
 const AddEmployee = () => {
 
     const navigate = useNavigate();
@@ -38,12 +42,12 @@ const AddEmployee = () => {
 
         try {
             const res = await axios.post(
-                'https://free-ap-south-1.cosmocloud.io/development/api/employee',
+                apiUrl,
                 employee,
                 {
                     headers: {
-                        'projectId': '66ade3045981a392dc2bb38b',
-                        'environmentId': '66ade3045981a392dc2bb38c',
+                        'projectId': projectId,
+                        'environmentId': environmentId,
                     }
                 }
             );
